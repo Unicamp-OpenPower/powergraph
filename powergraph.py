@@ -21,6 +21,18 @@ import argparse
 
 INTERVAL = 10
 NREAD = 10
+INFINITY = False
+
+
+def create_string(iteration, dic):
+    """
+    Pretty print the output of the IPMI execution
+    """
+    return str(iteration) + '|' + dic['Year'] + '/' + \
+        get_month_number(dic['Month']) + '/' + \
+        dic['Day'] + '|' + dic['Hour'] + ':' + \
+        dic['Min'] + ':' + dic['Seg'] + '|' + \
+        dic['Energy']
 
 
 def formated_print(dic):
@@ -59,12 +71,12 @@ def get_input():
     """
     Reads the user input from command execution
     """
-    parser = argparse.ArgumentParser(description='IPMI Parameters')
+    parser = argparse.ArgumentParser(description='Parameters')
     parser.add_argument('--host', help='adress of the host')
     parser.add_argument('--port', help='port of IPMI host')
     parser.add_argument('--user', help='user allowed to acces IPMI')
     parser.add_argument('--passwd', help='password for the specific user')
-    parser.add_argument('--interval', help='interval between data reading')
+    parser.add_argument('--interval', help='seconds between each data reading')
     parser.add_argument('--nread', help='number of time to collect data')
     args = parser.parse_args()
     return args, parser
@@ -98,35 +110,47 @@ def build_command(args, parser):
     if args.nread:
         global NREAD
         NREAD = args.nread
+    else:
+        global INFINITY
+        INFINITY = True
     return cmd
 
 
+def run(command, counter):
+    result = execute_stdout(command)
+    aux = result[1].split('\n')
+    for count, entry in enumerate(aux):
+        if 'Instantaneous power reading' in entry:
+            energy = entry.replace(' ', '').split(':')[1]
+            energy = energy.replace('Watts', '')
+        elif 'timestamp' in entry:
+            aux = entry.replace(' ', '').split(':')
+            aux = aux[1:len(aux)]
+            infos = {}
+            infos['Week'] = aux[0][0:3]
+            infos['Month'] = aux[0][3:6]
+            infos['Day'] = aux[0][6:8]
+            infos['Hour'] = aux[0][8:10]
+            infos['Min'] = aux[1]
+            infos['Seg'] = aux[2][0:2]
+            infos['Year'] = aux[2][2:6]
+            infos['Energy'] = energy
+            print create_string(counter + 1, infos)
+
+
 def run_ipmi(command):
-    nread_counter = 0
     try:
-        while int(nread_counter) < int(NREAD):
-            result = execute_stdout(command)
-            aux = result[1].split('\n')
-            print str(nread_counter + 1) + ' |',
-            for count, entry in enumerate(aux):
-                if 'Instantaneous power reading' in entry:
-                    energy = entry.replace(' ', '').split(':')[1]
-                    energy = energy.replace('Watts', '')
-                elif 'timestamp' in entry:
-                    aux = entry.replace(' ', '').split(':')
-                    aux = aux[1:len(aux)]
-                    infos = {}
-                    infos['Week'] = aux[0][0:3]
-                    infos['Month'] = aux[0][3:6]
-                    infos['Day'] = aux[0][6:8]
-                    infos['Hour'] = aux[0][8:10]
-                    infos['Min'] = aux[1]
-                    infos['Seg'] = aux[2][0:2]
-                    infos['Year'] = aux[2][2:6]
-                    infos['Energy'] = energy
-                    formated_print(infos)
-            nread_counter += 1
-            time.sleep(float(INTERVAL))
+        nread_counter = 0
+        if INFINITY:
+            while 1:
+                run(command, nread_counter)
+                nread_counter += 1
+                time.sleep(float(INTERVAL))
+        else:
+            while int(nread_counter) < int(NREAD):
+                run(command, nread_counter)
+                nread_counter += 1
+                time.sleep(float(INTERVAL))
     except KeyboardInterrupt:
         print "\nExecution cancelled. Bye!"
         sys.exit(1)
