@@ -23,10 +23,26 @@ INTERVAL = 10
 NREAD = 10
 
 
-
 def formated_print(dic):
-    print dic['Year']+','+dic['Month']+','+dic['Day']+' | '+dic['Hour']+\
-            ':'+dic['Min']+dic['Seg']+' | '+dic['Energy']
+    """
+    Pretty print the output of the IPMI execution
+    """
+    print dic['Year'] + '/' + get_month_numner(dic['Month']) + '/' + \
+        dic['Day'] + ' | ' + dic['Hour'] + ':' + dic['Min'] + ':' + \
+        dic['Seg'] + ' | ' + dic['Energy'] + ' Watts'
+
+
+def get_month_numner(month):
+    """
+    Return the month as int based its name
+    """
+    mDict = {'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6,
+             'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12}
+    if month in mDict:
+        return str(mDict[month])
+    else:
+        return 'Month not find.'
+
 
 def execute_stdout(command):
     """ Execute a command with its parameter and return the exit code
@@ -91,14 +107,14 @@ def run_ipmi(command):
         while int(nread_counter) < int(NREAD):
             result = execute_stdout(command)
             aux = result[1].split('\n')
-            print "\nExecution number: " + str(nread_counter + 1)
-            for b, a in enumerate(aux):
-                if 'Instantaneous power reading' in a: 
-                    energy = a.replace(' ', '').split(':')[1].replace('Watts','')
-                elif 'timestamp' in a:
-                    aux = a.replace(' ', '').split(':')
+            print str(nread_counter + 1) + ' |',
+            for count, entry in enumerate(aux):
+                if 'Instantaneous power reading' in entry:
+                    energy = entry.replace(' ', '').split(':')[1]
+                    energy = energy.replace('Watts', '')
+                elif 'timestamp' in entry:
+                    aux = entry.replace(' ', '').split(':')
                     aux = aux[1:len(aux)]
-            
                     infos = {}
                     infos['Week'] = aux[0][0:3]
                     infos['Month'] = aux[0][3:6]
