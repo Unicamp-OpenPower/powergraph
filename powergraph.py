@@ -14,9 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+import sys
+import time
 import subprocess
-from time import sleep
 import argparse
+
+INTERVAL = 10
+NREAD = 10
 
 
 def execute_stdout(command):
@@ -30,21 +34,73 @@ def execute_stdout(command):
         return excp.returncode, excp.output
 
 
-parser = argparse.ArgumentParser(description='Parameters for IPMI')
-parser.add_argument('--host', help='adress of the host')
-parser.add_argument('--port', help='port of IPMI host')
-parser.add_argument('--user', help='user allowed to acces IPMI')
-parser.add_argument('--passwd', help='password for the specific user')
-args = parser.parse_args()
+def get_input():
+    """
+    Reads the user input from command execution
+    """
+    parser = argparse.ArgumentParser(description='IPMI Parameters')
+    parser.add_argument('--host', help='adress of the host')
+    parser.add_argument('--port', help='port of IPMI host')
+    parser.add_argument('--user', help='user allowed to acces IPMI')
+    parser.add_argument('--passwd', help='password for the specific user')
+    parser.add_argument('--interval', help='interval between data reading')
+    parser.add_argument('--nread', help='number of time to collect data')
+    args = parser.parse_args()
+    return args
 
-i=0
-while i < 10:    
-    command = 'sudo ipmitool -I lanplus -H '+args.host+' -p '+args.port+' -U '+args.user+' -P '+args.passwd+' dcmi power reading'
-    result = execute_stdout(command)
-    aux = result[1].split('\n')
-    print
-    for b, a in enumerate(aux):
-        if 'Instantaneous power reading' in a or 'timestamp' in a:
-            print a.replace(' ', '')
-    i+=1
-    sleep(2)
+
+def build_command(args):
+    """
+    Build the string of the IPMI command for execution
+    """
+    cmd = "sudo ipmitool -I lanplus"
+    if not args.host:
+        print "Please, hostname is required."
+        sys.exit(1)
+    else:
+        cmd += ' -H ' + args.host
+    if args.port:
+        cmd += ' -p ' + args.port
+    if not args.user:
+        print "Please, username is required."
+        sys.exit(1)
+    else:
+        cmd += ' -U ' + args.user
+    if args.passwd:
+        cmd += ' -P ' + args.passwd
+    cmd += ' dcmi power reading'
+    if args.interval:
+        global INTERVAL
+        INTERVAL = args.interval
+    if args.nread:
+        global NREAD
+        NREAD = args.nread
+    return cmd
+
+
+def run_ipmi(command):
+    nread_counter = 0
+    try:
+        while int(nread_counter) < int(NREAD):
+            result = execute_stdout(command)
+            aux = result[1].split('\n')
+            print "\nExecution number: " + str(nread_counter + 1)
+            for b, a in enumerate(aux):
+                if 'Instantaneous power reading' in a or 'timestamp' in a:
+                    print a.replace(' ', '')
+            nread_counter += 1
+            time.sleep(float(INTERVAL))
+    except KeyboardInterrupt:
+        print "\nExecution cancelled. Bye!"
+        sys.exit(1)
+
+
+def main():
+    run_ipmi(build_command(get_input()))
+
+
+if __name__ == "__main__":
+    """
+    Invoking the main exection function.
+    """
+    main()
