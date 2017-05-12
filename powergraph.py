@@ -46,23 +46,25 @@ def get_input():
     parser.add_argument('--interval', help='interval between data reading')
     parser.add_argument('--nread', help='number of time to collect data')
     args = parser.parse_args()
-    return args
+    return args, parser
 
 
-def build_command(args):
+def build_command(args, parser):
     """
     Build the string of the IPMI command for execution
     """
     cmd = "sudo ipmitool -I lanplus"
     if not args.host:
-        print "Please, hostname is required."
+        print "\nERROR: hostname is required.\n"
+        parser.print_help()
         sys.exit(1)
     else:
         cmd += ' -H ' + args.host
     if args.port:
         cmd += ' -p ' + args.port
     if not args.user:
-        print "Please, username is required."
+        print "\nERROR: username is required.\n"
+        parser.print_help()
         sys.exit(1)
     else:
         cmd += ' -U ' + args.user
@@ -96,7 +98,7 @@ def run_ipmi(command):
 
 
 def main():
-    run_ipmi(build_command(get_input()))
+    run_ipmi(build_command(get_input()[0], get_input()[1]))
 
 
 if __name__ == "__main__":
