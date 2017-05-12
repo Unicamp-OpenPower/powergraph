@@ -27,12 +27,12 @@ def formated_print(dic):
     """
     Pretty print the output of the IPMI execution
     """
-    print dic['Year'] + '/' + get_month_numner(dic['Month']) + '/' + \
+    print dic['Year'] + '/' + get_month_number(dic['Month']) + '/' + \
         dic['Day'] + ' | ' + dic['Hour'] + ':' + dic['Min'] + ':' + \
         dic['Seg'] + ' | ' + dic['Energy'] + ' Watts'
 
 
-def get_month_numner(month):
+def get_month_number(month):
     """
     Return the month as int based its name
     """
