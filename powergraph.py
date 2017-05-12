@@ -23,6 +23,11 @@ INTERVAL = 10
 NREAD = 10
 
 
+
+def formated_print(dic):
+    print dic['Year']+','+dic['Month']+','+dic['Day']+' | '+dic['Hour']+\
+            ':'+dic['Min']+dic['Seg']+' | '+dic['Energy']
+
 def execute_stdout(command):
     """ Execute a command with its parameter and return the exit code
     and the command output """
@@ -89,8 +94,7 @@ def run_ipmi(command):
             print "\nExecution number: " + str(nread_counter + 1)
             for b, a in enumerate(aux):
                 if 'Instantaneous power reading' in a: 
-                    aux = a.replace(' ', '').split(':')[1].replace('Watts','')
-                    print aux
+                    energy = a.replace(' ', '').split(':')[1].replace('Watts','')
                 elif 'timestamp' in a:
                     aux = a.replace(' ', '').split(':')
                     aux = aux[1:len(aux)]
@@ -103,8 +107,8 @@ def run_ipmi(command):
                     infos['Min'] = aux[1]
                     infos['Seg'] = aux[2][0:2]
                     infos['Year'] = aux[2][2:6]
-                    print infos
-
+                    infos['Energy'] = energy
+                    formated_print(infos)
             nread_counter += 1
             time.sleep(float(INTERVAL))
     except KeyboardInterrupt:
