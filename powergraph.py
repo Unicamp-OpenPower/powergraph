@@ -29,7 +29,23 @@ while i < 10:
     aux = result[1].split('\n')
     print
     for b, a in enumerate(aux):
-        if 'Instantaneous power reading' in a or 'timestamp' in a:
-            print a.replace(' ', '')
+        if 'Instantaneous power reading' in a: 
+            aux = a.replace(' ', '').split(':')[1].replace('Watts','')
+            print aux
+        elif 'timestamp' in a:
+            aux = a.replace(' ', '').split(':')
+            aux = aux[1:len(aux)]
+            
+            infos = {}
+            infos['Week'] = aux[0][0:3]
+            infos['Month'] = aux[0][3:6]
+            infos['Day'] = aux[0][6:8]
+            infos['Hour'] = aux[0][8:10]
+            infos['Min'] = aux[1]
+            infos['Seg'] = aux[2][0:2]
+            infos['Year'] = aux[2][2:6]
+            print infos
+
+
     i+=1
     sleep(2)
