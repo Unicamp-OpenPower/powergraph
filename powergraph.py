@@ -14,14 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+import os.path
 import sys
 import time
 import subprocess
 import argparse
+from tinydb import TinyDB, Query
 
 INTERVAL = 10
 NREAD = 10
 INFINITY = False
+STORE = False
+
+
+def savedb(input):
+    """
+    Save the execution results in a nosql db
+    """
+    db = TinyDB('powerdata'+input[1].replace('/', '')+'.json')
+    table = db.table(input[1].replace('/', ''))
+    # exec  date    time    watts
+    # ['2', '2017/5/12', '23:30:22', '707']
+    # we ignore the execution counter
+    table.insert({'date': input[1], 'time': input[2], 'watts': input[3]})
+    db.close()
 
 
 def create_string(iteration, dic):
@@ -78,6 +94,8 @@ def get_input():
     parser.add_argument('--passwd', help='password for the specific user')
     parser.add_argument('--interval', help='seconds between each data reading')
     parser.add_argument('--nread', help='number of time to collect data')
+    parser.add_argument('--store', action='store_true',
+                        help='save the data collected in a nosql db')
     args = parser.parse_args()
     return args, parser
 
@@ -113,6 +131,9 @@ def build_command(args, parser):
     else:
         global INFINITY
         INFINITY = True
+    if args.store:
+        global STORE
+        STORE = True
     return cmd
 
 
@@ -135,7 +156,11 @@ def run(command, counter):
             infos['Seg'] = aux[2][0:2]
             infos['Year'] = aux[2][2:6]
             infos['Energy'] = energy
-            print create_string(counter + 1, infos)
+            info = create_string(counter + 1, infos)
+            if not STORE:
+                print info
+            else:
+                savedb(info.split('|'))
 
 
 def run_ipmi(command):
