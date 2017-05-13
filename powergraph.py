@@ -138,6 +138,9 @@ def build_command(args, parser):
 
 
 def run(command, counter):
+    """
+    Parsers the result of the command execution
+    """
     result = execute_stdout(command)
     aux = result[1].split('\n')
     for count, entry in enumerate(aux):
@@ -164,6 +167,9 @@ def run(command, counter):
 
 
 def run_ipmi(command):
+    """
+    Run IPMI command.
+    """
     try:
         nread_counter = 0
         if INFINITY:
@@ -182,11 +188,14 @@ def run_ipmi(command):
 
 
 def main():
+    """
+    Main execution.
+    """
     run_ipmi(build_command(get_input()[0], get_input()[1]))
 
 
 if __name__ == "__main__":
     """
-    Invoking the main exection function.
+    Invoking the main execution function.
     """
     main()
