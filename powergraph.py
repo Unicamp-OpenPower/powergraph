@@ -32,7 +32,7 @@ def savedb(input):
     Save the execution results in a nosql db. Each new day is represented by a
     table.
     """
-    db = TinyDB('powerdata'+input[1].replace('/', '')+'.json')
+    db = TinyDB('powerdata.json')
     table = db.table(input[1].replace('/', ''))
     # exec  date    time    watts
     # ['2', '2017/5/12', '23:30:22', '707']
