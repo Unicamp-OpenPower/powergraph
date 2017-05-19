@@ -16,3 +16,6 @@ In order to run the script, use ```python 2.7``` as it follows:
 ```
 python2.7 powergraph.py --host="server address" --port="server port" --user="allowed user" --passwd="password for this user"
 ```
+You can use the optional parameter ```--store``` in order to save
+the infos as json on tinydb. Without this parameter, the script will
+print on the terminal.
