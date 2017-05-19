@@ -105,7 +105,7 @@ def build_command(args, parser):
     """
     Build the string of the IPMI command for execution
     """
-    cmd = "sudo ipmitool -I lanplus"
+    cmd = "ipmitool -I lanplus"
     if not args.host:
         print "\nERROR: hostname is required.\n"
         parser.print_help()
