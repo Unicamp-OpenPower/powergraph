@@ -7,7 +7,7 @@ To use this software, you'll have to install ```ipmitool``` and ```python 2.7```
 Besides, you can install all the python dependencies running pip as it follows:
 
 ```
-pip install -r requirements.txt
+ sudo pip install -r requirements.txt
 ```
 
 ## Running
