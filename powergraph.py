@@ -25,7 +25,7 @@ INTERVAL = 10
 NREAD = 10
 INFINITY = False
 STORE = False
-
+FEEDBACK = False
 
 def savedb(input):
     """
@@ -97,6 +97,9 @@ def get_input():
     parser.add_argument('--nread', help='number of time to collect data')
     parser.add_argument('--store', action='store_true',
                         help='save the data collected in a nosql db')
+    parser.add_argument('--feedback', action='store_true',
+                        help='print the collecting status')
+
     args = parser.parse_args()
     return args, parser
 
@@ -135,6 +138,9 @@ def build_command(args, parser):
     if args.store:
         global STORE
         STORE = True
+    if args.feedback:
+        global FEEDBACK
+        FEEDBACK = True
     return cmd
 
 
@@ -161,7 +167,7 @@ def run(command, counter):
             infos['Year'] = aux[2][2:6]
             infos['Energy'] = energy
             info = create_string(counter + 1, infos)
-            if not STORE:
+            if not STORE or FEEDBACK:
                 print info
             else:
                 savedb(info.split('|'))
