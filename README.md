@@ -25,3 +25,12 @@ Run ```csvcreator.py``` like this:
 ```
 python2.7 csvcreator.py --jsonfile="generated_json_name"
 ```
+
+The ```graph_csv.py``` runs the ```powergraph.py``` and, from time
+to time, creates a new csv file, with the latest measures. To run it,
+type:
+
+```
+python2.7 powergraph.py --host="server address" --port="server port" --user="allowed user" --passwd="password for this user 
+--jsonfile="path to bd jsonfile"
+```
