@@ -32,6 +32,12 @@ def build_commands(args):
     csv_command = 'python2.7 csvcreator.py --name=last --date=' + date + ' --jsonfile='
     csv_command = csv_command + args.jsonfile
     
+    if args.csv_interval:
+        global CSV_INTERVAL 
+        CSV_INTERVAL = args.csv_interval
+    else:
+        CSV_INTERVAL = 300
+
     ipmi_command = 'python2.7 powergraph.py'
     if not args.host:
         print "\nERROR: hostname is required.\n"
@@ -75,6 +81,9 @@ def get_input():
     
     parser.add_argument('--jsonfile',
                         help='jsonfile to be converted as csv')
+    parser.add_argument('--csv_interval',
+                        help='interval you want to create a new csv file')
+
     return parser.parse_args()
 
 def run_collector(command):
@@ -88,7 +97,7 @@ def run_csv(command):
     function to run the csv generator 
     """
     while 1:
-        time.sleep(300)
+        time.sleep(CSV_INTERVAL)
         os.system(command)
         os.system("tail -n 300 last.csv > aux.csv")
         os.system("mv aux.csv last.csv")
