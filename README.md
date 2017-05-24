@@ -20,7 +20,7 @@ You can use the optional parameter ```--store``` in order to save
 the infos as json on tinydb. Without this parameter, the script will
 print on the terminal. Besides, you can use ```--feedback``` with store
 in order to see the measures status. If you want to set the time interval that a new csv file is 
-generated, you can use the flag ```csav_interval```.
+generated, you can use the flag ```csv_interval```.
 
 Run ```csvcreator.py``` like this:
 
