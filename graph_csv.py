@@ -29,7 +29,7 @@ def build_commands(args):
     day = int(time.strftime("%d")) 
     date=str(year)+str(month)+str(day)
     
-    csv_command = 'python2.7 csvcreator.py --name=last --date='+date+' --jsonfile='
+    csv_command = 'python2.7 csvcreator.py --name=last --date=' + date + ' --jsonfile='
     csv_command = csv_command + args.jsonfile
     
     ipmi_command = 'python2.7 powergraph.py'
@@ -38,19 +38,19 @@ def build_commands(args):
         parser.print_help()
         sys.exit(1)
     else:
-        ipmi_command += ' --host='+args.host
+        ipmi_command += ' --host=' + args.host
     if args.port:
-        ipmi_command += ' --port='+args.port
+        ipmi_command += ' --port=' + args.port
     if not args.user:
         print "\nERROR: username is required.\n"
         parser.print_help()
         sys.exit(1)
     else:
-        ipmi_command += ' --user='+args.user
+        ipmi_command += ' --user=' + args.user
     if args.passwd:
-        ipmi_command += ' --passwd='+args.passwd
+        ipmi_command += ' --passwd=' + args.passwd
     if args.interval:
-        ipmi_command += ' --interval='+args.interval
+        ipmi_command += ' --interval=' + args.interval
     else:
         ipmi_command += ' --interval=1'
     ipmi_command += ' --store'
