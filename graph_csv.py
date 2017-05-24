@@ -20,12 +20,13 @@ import os
 
 INTERVAL = 10
 
-#function used to build the ipmi and csv commands
 def build_commands(args):
+    """
+    function used to build the ipmi and csv commands
+    """
     year = time.strftime("%Y")
     month = int(time.strftime("%m"))
-    # DO NOT FORGET TO CHANGE THIS AFTER TESTING
-    day = int(time.strftime("%d")) + 1
+    day = int(time.strftime("%d")) 
     date=str(year)+str(month)+str(day)
     
     csv_command = 'python2.7 csvcreator.py --name=last --date='+date+' --jsonfile='
@@ -56,8 +57,10 @@ def build_commands(args):
     
     return ipmi_command,csv_command
 
-#function to get the arguments from the user
 def get_input():
+    """
+    function to get the arguments from the user
+    """
     parser = argparse.ArgumentParser(description='Parameters')
     
     parser.add_argument('--host', help='adress of the host')
@@ -74,12 +77,16 @@ def get_input():
                         help='jsonfile to be converted as csv')
     return parser.parse_args()
 
-#function to run the collection of data
 def run_collector(command):
+    """
+    function to run the collection of data
+    """
     os.system(command)
 
-#function to run the csv generator 
 def run_csv(command):
+    """
+    function to run the csv generator 
+    """
     while 1:
         time.sleep(300)
         os.system(command)
