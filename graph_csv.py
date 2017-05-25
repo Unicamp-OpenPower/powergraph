@@ -100,7 +100,7 @@ def run_csv(command):
     function to run the csv generator 
     """
     while 1:
-        time.sleep(CSV_INTERVAL)
+        time.sleep(float(CSV_INTERVAL))
         os.system(command)
         os.system("tail -n 300 last.csv > aux.csv")
         os.system("mv aux.csv last.csv")
