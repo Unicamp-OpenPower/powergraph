@@ -69,18 +69,21 @@ def get_input():
     """
     parser = argparse.ArgumentParser(description='Parameters')
     
-    parser.add_argument('--host', help='adress of the host')
-    parser.add_argument('--port', help='port of IPMI host')
-    parser.add_argument('--user', help='user allowed to acces IPMI')
+    parser.add_argument('--host', 
+                        help='adress of the host', required=True)
+    parser.add_argument('--port', 
+                        help='port of IPMI host', required=True)
+    parser.add_argument('--user',
+                        help='user allowed to acces IPMI', required=True)
     parser.add_argument('--passwd', 
-                        help='password for the specific user')
+                        help='password for the specific user', required=True)
     parser.add_argument('--interval', 
                         help='seconds between each data reading')
     parser.add_argument('--nread', 
                         help='number of time to collect data')
     
     parser.add_argument('--jsonfile',
-                        help='jsonfile to be converted as csv')
+                        help='jsonfile to be converted as csv', required=True)
     parser.add_argument('--csv_interval',
                         help='interval you want to create a new csv file')
 
