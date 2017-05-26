@@ -66,6 +66,8 @@ def readdbtable(json_file_data, table_name):
     # Creates two separeted lists that will be the coluns in
     # the csv file. One is for the time and another for the
     # watts
+    timelist.append('date')
+    wattslist.append('consumption')
     for iten in dbdict:
         # print iten, dbdict[iten], timedict[dbdict[iten]]
         timelist.append(dbdict[iten])
