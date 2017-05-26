@@ -103,7 +103,7 @@ def run_csv(command):
         time.sleep(float(CSV_INTERVAL))
         os.system(command)
         os.system("tail -n 300 last.csv > aux.csv")
-        os.system("mv aux.csv last.csv")
+        os.system("mv -f aux.csv last.csv")
 
 args = get_input()
 ipmi_command, csv_command = build_commands(args)
