@@ -21,7 +21,7 @@ for i in $(seq 0 $size); do
             done
         done
         #comando to launch the data getter again
-        python2.7 graph_csv.py --host=177.220.10.134 --port=20006 \
+        python2.7 graph_csv.py --host=$IPMI_HOST --port=IPMI_PORT \
             --user=$IPMI_USER --passwd=$IPMI_PASS \
             --interval=1 --jsonfile=powerdata.json &
     fi
