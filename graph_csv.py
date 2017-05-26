@@ -19,6 +19,7 @@ import time
 import os
 
 INTERVAL = 10
+PYTHON_VERSION = 'python2.7'
 
 def build_commands(args):
     """
@@ -29,7 +30,8 @@ def build_commands(args):
     day = int(time.strftime("%d")) 
     date=str(year)+str(month)+str(day)
     
-    csv_command = 'python2.7 csvcreator.py --name=last --date=' + date + ' --jsonfile='
+    csv_command = PYTHON_VERSION + ' csvcreator.py --name=last --date=' + date + \
+            ' --jsonfile='
     csv_command = csv_command + args.jsonfile
     
     if args.csv_interval:
@@ -38,30 +40,30 @@ def build_commands(args):
     else:
         CSV_INTERVAL = 300
 
-    ipmi_command = 'python2.7 powergraph.py'
+    powergraph_command = PYTHON_VERSION + ' powergraph.py'
     if not args.host:
         print "\nERROR: hostname is required.\n"
         parser.print_help()
         sys.exit(1)
     else:
-        ipmi_command += ' --host=' + args.host
+        powergraph_command += ' --host=' + args.host
     if args.port:
-        ipmi_command += ' --port=' + args.port
+        powergraph_command += ' --port=' + args.port
     if not args.user:
         print "\nERROR: username is required.\n"
         parser.print_help()
         sys.exit(1)
     else:
-        ipmi_command += ' --user=' + args.user
+        powergraph_command += ' --user=' + args.user
     if args.passwd:
-        ipmi_command += ' --passwd=' + args.passwd
+        powergraph_command += ' --passwd=' + args.passwd
     if args.interval:
-        ipmi_command += ' --interval=' + args.interval
+        powergraph_command += ' --interval=' + args.interval
     else:
-        ipmi_command += ' --interval=1'
-    ipmi_command += ' --store'
+        powergraph_command += ' --interval=1'
+    powergraph_command += ' --store'
     
-    return ipmi_command,csv_command
+    return powergraph_command,csv_command
 
 def get_input():
     """
@@ -86,6 +88,11 @@ def get_input():
                         help='jsonfile to be converted as csv', required=True)
     parser.add_argument('--csv_interval',
                         help='interval you want to create a new csv file')
+    parser.add_argument('--tail_length',
+                        help='the amount of inputs do get from the csv file '
+                        'in order to create the input for the graphic '
+                        'visualization',
+                        default=300)
 
     return parser.parse_args()
 
@@ -93,23 +100,44 @@ def run_collector(command):
     """
     function to run the collection of data
     """
-    os.system(command)
+    try:
+        os.system(command)
+    except OSError as err:
+        print ("OS erros: {0}".format(err))
 
-def run_csv(command):
+
+def run_csv(command,tail_length):
     """
     function to run the csv generator 
     """
-    while 1:
+    while True:
         time.sleep(float(CSV_INTERVAL))
-        os.system(command)
-        os.system("tail -n 300 last.csv > aux.csv")
-        os.system("mv -f aux.csv last.csv")
+        try:
+            os.system(command)
+            os.system("tail -n 300 last.csv > aux.csv")
+            os.system("mv -f aux.csv last.csv")
+        except OSError as err:
+            print("OS error: {0}".format(err))
 
-args = get_input()
-ipmi_command, csv_command = build_commands(args)
+def main():
+    """
+    Main execution.
+    """
+    args = get_input()
+    powergraph_command, csv_command = build_commands(args)
+    thread.start_new_thread(run_collector, (powergraph_command,))
+    thread.start_new_thread(run_csv, (csv_command, args.tail_length, ))
+    try:
+        while True:
+            pass
+    except (KeyboardInterrupt, SystemExit):
+        print "\nExecution cancelled. Bye!"
+        sys.exit(1)
 
-thread.start_new_thread(run_collector,(ipmi_command,))
-thread.start_new_thread(run_csv,(csv_command,))
 
-while 1:
-    pass
+if __name__ == "__main__":
+    """
+    Invoking the main execution function.
+    """
+    main()
+
