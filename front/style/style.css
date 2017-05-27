@@ -1,0 +1,158 @@
+body {
+  font: 12px Arial;
+  height: 1000px;
+}
+
+path {
+  stroke:  	#696969;
+  stroke-width: 2;
+  fill: none;
+}
+
+/*.dot {
+  fill-opacity: .7;
+}*/
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: grey;
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+#scatter {
+  top: 100px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  width: 960px;
+}
+
+.button {
+  margin: 0 auto;
+  padding: 10px 23px;
+  font-size: 20px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #5b9aa0;
+  border: none;
+  border-radius: 13px;
+  box-shadow: 0 7px #999;
+}
+
+.button:hover {background-color: #4a7d82}
+
+.button:active {
+  background-color: #4a7d82;
+  box-shadow: 0 3px #666;
+  transform: translateY(4px);
+}
+
+/* The switch - the box around the slider */
+.switch {
+  transform: translateY(10px);
+
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Control tools position*/
+#graphActions {
+  position: absolute;
+}
+
+.updateButton{
+  padding-left: 200px;
+}
+.toggle{
+  padding-left: 50px;
+  line-height: 49px;
+}
+.checkDescription{
+  padding-left: 5px;
+  text-align: top;
+}

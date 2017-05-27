@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--  css, javascript and csv located on powergraph folder-->
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="style/style.css">
+</head>
+<body>
+
+  <div style="display:table">
+    <div id="scatter" style="display:table-row">
+    </div>
+
+    <div id="graphActions" style="display:table-row">
+      <!-- Rounded switch -->
+      <div style="display:table-cell" class="toggle">
+        <label class="switch">
+          <input id="checkChange" type="checkbox">
+          <div class="slider round">
+          </div>
+        </label>
+      </div >
+
+      <div style="display:table-cell" class="checkDescription">
+        Analize graph in real time.
+      </div>
+
+      <div style="display:table-cell" class="updateButton">
+        <button class="button" id="Button" onclick="updateData()">Update</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- load the d3.js library -->
+  <script src="http://d3js.org/d3.v4.min.js"></script>
+  <script src="js/d3-tip.js"></script>
+  <script src="js/graph.js"></script>
+
+</body>
