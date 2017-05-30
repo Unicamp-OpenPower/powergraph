@@ -39,6 +39,6 @@ to time, creates a new csv file, with the latest measures. To run it,
 type:
 
 ```
-python2.7 powergraph.py --host="server address" --port="server port" --user="allowed user" --passwd="password for this user 
+python2.7 graph_csv.py --host="server address" --port="server port" --user="allowed user" --passwd="password for this user 
 --jsonfile="path to bd jsonfile"
 ```
