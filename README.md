@@ -42,3 +42,9 @@ type:
 python2.7 graph_csv.py --host="server address" --port="server port" --user="allowed user" --passwd="password for this user 
 --jsonfile="path to bd jsonfile"
 ```
+
+Besides, you can use the following optional arguments:
+- interval: interval between each ipmi measure (default=10)
+- nread: number of ipmi measures to be done (default=infinity)
+- csv_interval: interval that a new csv file is made (deafult=300s)
+- tail_length: size of the csv files (default=300)
