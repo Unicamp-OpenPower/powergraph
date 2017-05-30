@@ -30,6 +30,10 @@ Run ```csvcreator.py``` like this:
 python2.7 csvcreator.py --jsonfile="generated_json_name"
 ```
 
+There are two optional arguments: ```--date```, to create the csv only with
+the data from a specific day and ```--name```, with the name you want your
+```csv``` file.
+
 The ```graph_csv.py``` runs the ```powergraph.py``` and, from time
 to time, creates a new csv file, with the latest measures. To run it,
 type:
