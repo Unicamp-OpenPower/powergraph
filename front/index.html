@@ -5,8 +5,9 @@
 <link rel="stylesheet" type="text/css" href="style/style.css">
 </head>
 <body>
-
-  <div style="display:table">
+<div id="wrapper">
+  <div style="display:table" id="table">
+    <h1>&#9889;<span class="striped"> POWER</span><span class="h1graph">graph</span> </h1>
     <div id="scatter" style="display:table-row">
     </div>
 
@@ -30,10 +31,22 @@
     </div>
 
   </div>
+  <footer>
+    <nav>
+      <h3>Explore our work</h3>
+      <ul>
+        <li><a href="http://openpower.ic.unicamp.br/">OpenPOWER @ UNICAMP</a></li>
+        <li><a href="http://177.220.10.134/minicloud/">MiniCloud</a></li>
+        <li><a href="http://openpower.ic.unicamp.br/blog/">Blog</a></li>
+      </ul>
+    </nav>
 
+  </footer>
+</div>
   <!-- load the d3.js library -->
   <script src="http://d3js.org/d3.v4.min.js"></script>
   <script src="js/d3-tip.js"></script>
+  <script src="js/moment.min.js"></script>
   <script src="js/graph.js"></script>
 
 </body>

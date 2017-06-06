@@ -82,9 +82,12 @@ d3.csv(DATA_FOLDER, function(error, data) {
   origdata = data;
 
   // Scale the range of the data
-  xScale.domain(d3.extent(data, function(d) { return d.date; }));
+  xScale.domain([moment(d3.min(data, function(d) { return d.date; })).subtract(2, 'seconds').toDate(),moment(d3.max(data, function(d) { return d.date; })).add(2, 'seconds').toDate()]);
   // .nice(d3.timeSecond, 20);
-  yScale.domain([400, d3.max(data, function(d) { return d.consumption; })]).nice(1);
+  console.log(d3.extent(data, function(d) { return d.date; }));
+  console.log([moment(d3.min(data, function(d) { return d.date; })).subtract(1, 'minutes').toDate(),moment(d3.max(data, function(d) { return d.date; })).add(1, 'minutes').toDate()]);
+  console.log(moment(d3.min(data, function(d) { return d.date; })).isValid());
+  yScale.domain([d3.min(data, function(d) { return d.consumption; }) - 400, d3.max(data, function(d) { return d.consumption; }) + 50]);
   xScale2.domain(xScale.domain());
   yScale2.domain(yScale.domain()).nice(1);
 
@@ -115,10 +118,20 @@ d3.csv(DATA_FOLDER, function(error, data) {
   .attr("transform", "translate(0," + height + ")")
   .call(xAxis);
 
+  focus.append("text")
+        .attr("text-anchor", "right")
+        .attr("transform", "translate("+ (width - 40) +","+(height+20)+")")
+        .text("Time");
+
   // Add the Y Axis
   var eixoY = focus.append("g")
   .attr("class", "axis--y")
   .call(yAxis);
+
+  focus.append("text")
+      .attr("text-anchor", "right")  // this makes it easy to centre the text as the transform is applied to the anchor
+      .attr("transform", "translate("+ (-35) +","+(height - 230)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+      .text("Consumption (W)");
 
   // Append scatter plot to brush chart area
   var dots = context.append("g").attr('class', 'dotB');
@@ -163,15 +176,22 @@ function updateData() {
   d3.csv(DATA_FOLDER, function(error, data) {
     data.forEach(function(d) {
       d.date = parseDate(d.date);
-      d.close = +d.close;
+      d.consumption = +d.consumption;
     });
 
     // Scale the range of the data (slice to show the most recent 10000 dots)
-    xScale.domain(d3.extent(data.slice(-10000), function(d) { return d.date; }));
-    yScale.domain([400, d3.max(data.slice(-10000), function(d) { return d.consumption; })]).nice(1);
-    xScale2.domain(d3.extent(data, function(d) { return d.date; }));
-    yScale2.domain([400, d3.max(data, function(d) { return d.consumption; })]).nice(1);
-
+    // xScale.domain(d3.extent(data.slice(-10000), function(d) { return d.date; }));
+    // yScale.domain([400, d3.max(data.slice(-10000), function(d) { return d.consumption; })]).nice(1);
+    // xScale2.domain(d3.extent(data, function(d) { return d.date; }));
+    // yScale2.domain([400, d3.max(data, function(d) { return d.consumption; })]).nice(1);
+    // Scale the range of the data
+    console.log(d3.extent(data, function(d) { return d.date; }));
+    console.log([d3.min(data, function(d) { return parseInt(d.consumption); }) - 400, d3.max(data, function(d) { return parseInt(d.consumption); })]);
+    console.log(moment(d3.min(data, function(d) { return d.date; })).isValid());
+    xScale.domain([moment(d3.min(data, function(d) { return d.date; })).subtract(2, 'seconds').toDate(),moment(d3.max(data, function(d) { return d.date; })).add(2, 'seconds').toDate()]);
+    yScale.domain([d3.min(data, function(d) { return d.consumption; }) - 400, d3.max(data, function(d) { return d.consumption; }) + 50]);
+    xScale2.domain(xScale.domain());
+    yScale2.domain(yScale.domain()).nice(1);
 
     // Select the section we want to apply our changes to
     var focus = d3.select(".focus");

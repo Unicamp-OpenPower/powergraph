@@ -1,8 +1,33 @@
 body {
   font: 12px Arial;
-  height: 1000px;
+  height: 800px;
+  /*background-color: #696969;*/
+  background-color: #013A6B;
+  background-image: -webkit-linear-gradient(45deg, #013A6B 50%, #004E95 50%);
+  padding-top: 20px;
 }
+h1{
+  /*font-family: sans-serif;*/
+  /*background: #222;*/
+  padding-left: 20px;
+  padding-top: 10px;
+  color:  #FFED00;
+  font-size: 48px;
+  margin: 0;
 
+}
+.striped{
+  /*font-size: 128px;*/
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-color: #1d6ab2;
+background-image: linear-gradient(-180deg, #ecf0f1 25%, transparent 25%, transparent 50%, #ecf0f1 50%, #ecf0f1 75%, transparent 75%, transparent);
+background-size: 12px 14px;
+}
+.h1graph{
+  text-shadow: 2px 0 0 #2F4F4F, -2px 0 0 #2F4F4F, 0 2px 0 #2F4F4F, 0 -2px 0 #2F4F4F, 1px 1px #2F4F4F, -1px -1px 0 #2F4F4F, 1px -1px 0 #2F4F4F, -1px 1px 0 #2F4F4F;
+  color:  #fff;
+}
 path {
   stroke:  	#696969;
   stroke-width: 2;
@@ -90,6 +115,7 @@ path {
   width: 60px;
   height: 34px;
 }
+
 /* Hide default HTML checkbox */
 .switch input {display:none;}
 /* The slider */
@@ -140,13 +166,9 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-/* Control tools position*/
-#graphActions {
-  position: absolute;
-}
 
 .updateButton{
-  padding-left: 200px;
+  padding-left: 500px;
 }
 .toggle{
   padding-left: 50px;
@@ -155,4 +177,63 @@ input:checked + .slider:before {
 .checkDescription{
   padding-left: 5px;
   text-align: top;
+}
+
+
+#table {
+  border-radius: 15px 15px 0px 0px;
+  margin: 0 auto;
+  width: 960px;
+  /*display: inline-block;*/
+  background-color: #fff;
+
+}
+
+/* Control tools position*/
+#graphActions {
+  border-radius: 0px 0px 15px 15px;
+  padding-bottom: 10px;
+  width: 960px;
+  position: absolute;
+  background-color: #fff;
+}
+#wrapper{
+  min-height: 100%;
+position: relative;
+}
+footer {
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  bottom: -7px;
+  background-color: #fff;
+  opacity: 0.8;
+  font-size: 14px;
+}
+
+nav {
+    padding-left: 30px;
+    color: #178acc;
+}
+
+footer ul {
+    padding:0px;
+    margin:0px;
+    list-style:none;
+}
+footer ul li { display: inline; }
+footer ul li a {
+    padding: 2px 10px;
+    margin-right: 20px;
+    display: inline-block;
+    font-size: 16px;
+    /* visual do link */
+    /*background-color:#EDEDED;*/
+    color: #333;
+    text-decoration: none;
+    border-bottom:3px solid #EDEDED;
+}
+footer ul li a:hover {
+    background-color:#D6D6D6;
+    border-bottom:3px solid #FFED00;
 }
