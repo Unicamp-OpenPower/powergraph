@@ -19,7 +19,7 @@ import sys
 import time
 import subprocess
 import argparse
-from tinydb import TinyDB, Query
+#from tinydb import TinyDB, Query
 
 INTERVAL = 10
 NREAD = 10
@@ -187,11 +187,18 @@ def run_ipmi(command):
         print "\nExecution cancelled. Bye!"
         sys.exit(1)
 
+def ipmi_check():
+	subp = subprocess.call("ipmitool", shell=True,
+				stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	if subp:
+		print "ipmitool is not installed. Exiting..."
+		exit()
 
 def main():
     """
     Main execution.
     """
+    ipmi_check()
     run_ipmi(build_command(get_input()[0], get_input()[1]))
 
 
