@@ -166,7 +166,7 @@ def main():
         # user set only the name
         elif name and not date:
             for table in getalltables(json_file):
-                createcsv(name + str(table), readdbtable(openjson(json_file),
+                createcsv(name, readdbtable(openjson(json_file),
                           str(table)))
         # user does not set any optional parameter
         else:
