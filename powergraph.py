@@ -19,7 +19,7 @@ import sys
 import time
 import subprocess
 import argparse
-#from tinydb import TinyDB, Query
+from tinydb import TinyDB, Query
 
 INTERVAL = 10
 NREAD = 10
