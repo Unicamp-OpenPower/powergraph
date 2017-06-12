@@ -149,16 +149,18 @@ def run(command, counter):
             energy = entry.replace(' ', '').split(':')[1]
             energy = energy.replace('Watts', '')
         elif 'timestamp' in entry:
-            aux = entry.replace(' ', '').split(':')
-            aux = aux[1:len(aux)]
+            filtered = [field for field in entry.split(' ') if field != '']
+            
+            timestamp = filtered[5].split(':')
+            
             infos = {}
-            infos['Week'] = aux[0][0:3]
-            infos['Month'] = aux[0][3:6]
-            infos['Day'] = aux[0][6:8]
-            infos['Hour'] = aux[0][8:10]
-            infos['Min'] = aux[1]
-            infos['Seg'] = aux[2][0:2]
-            infos['Year'] = aux[2][2:6]
+            infos['Week'] = filtered[2]
+            infos['Month'] = filtered[3]
+            infos['Day'] = filtered[4]
+            infos['Hour'] = timestamp[0]
+            infos['Min'] = timestamp[1]
+            infos['Seg'] = timestamp[2]
+            infos['Year'] = filtered[6]
             infos['Energy'] = energy
             info = create_string(counter + 1, infos)
             if not STORE:
