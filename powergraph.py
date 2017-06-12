@@ -171,6 +171,11 @@ def run_ipmi(command):
     """
     Run IPMI command.
     """
+    if not cmd_exists(command):
+        print "existe"
+    else:
+        print "não existe"
+
     try:
         nread_counter = 0
         if INFINITY:
@@ -187,18 +192,15 @@ def run_ipmi(command):
         print "\nExecution cancelled. Bye!"
         sys.exit(1)
 
-def ipmi_check():
-	subp = subprocess.call("ipmitool", shell=True,
-				stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-	if subp:
-		print "ipmitool is not installed. Exiting..."
-		exit()
+def cmd_exists(command):
+    subp = subprocess.call("type " + command, shell=True,
+			stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    return subp == 0
 
 def main():
     """
     Main execution.
     """
-    ipmi_check()
     run_ipmi(build_command(get_input()[0], get_input()[1]))
 
 
