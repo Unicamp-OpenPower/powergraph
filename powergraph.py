@@ -187,6 +187,10 @@ def run_ipmi(command):
         print "\nExecution cancelled. Bye!"
         sys.exit(1)
 
+def cmd_exists(command):
+    subp = subprocess.call("type " + command, shell=True,
+			stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    return subp == 0
 
 def main():
     """
