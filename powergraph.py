@@ -150,9 +150,7 @@ def run(command, counter):
             energy = energy.replace('Watts', '')
         elif 'timestamp' in entry:
             filtered = [field for field in entry.split(' ') if field != '']
-            
             timestamp = filtered[5].split(':')
-            
             infos = {}
             infos['Week'] = filtered[2]
             infos['Month'] = filtered[3]
