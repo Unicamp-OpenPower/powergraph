@@ -171,11 +171,6 @@ def run_ipmi(command):
     """
     Run IPMI command.
     """
-    if not cmd_exists(command):
-        print "existe"
-    else:
-        print "não existe"
-
     try:
         nread_counter = 0
         if INFINITY:
