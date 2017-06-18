@@ -1,8 +1,8 @@
 const DATA_FOLDER = "data/last.csv";
 
 // Set the dimensions of the canvas / graph
-var margin = {top: 20, right: 20, bottom: 110, left: 50},
-margin2 = {top: 430, right: 20, bottom: 20, left: 40},
+var margin = {top: 20, right: 20, bottom: 120, left: 70},
+margin2 = {top: 430, right: 20, bottom: 20, left: 70},
 width = 960 - margin.left - margin.right,
 height = 500 - margin.top - margin.bottom,
 height2 = 500 - margin2.top - margin2.bottom;
@@ -11,9 +11,10 @@ height2 = 500 - margin2.top - margin2.bottom;
 var origdata;
 
 // Parse the date / time
-var parseDate = d3.timeParse("%H:%M:%S");
+var parseDate = function(d){return moment.utc(d,"HH:mm:ss").toDate();}
 // Format the date / time
 var formatDate = d3.timeFormat("%H:%M:%S");
+var longFormatDate = d3.timeFormat("%H:%M:%S UTC%Z");
 
 // Set the ranges
 var xScale = d3.scaleTime().range([0, width]);
@@ -41,7 +42,7 @@ var tip = d3.tip()
 .attr("class", "d3-tip")
 .offset([-10, 0])
 .html(function(d) {
-  return "<span style='color:#5F9EA0'><strong>Time:</strong></span> "+formatDate(d.date) + " UTC−3<br>"+
+  return "<span style='color:#5F9EA0'><strong>Time:</strong></span> "+longFormatDate(d.date) + "<br>"+
   "<span style='color:#5F9EA0'><strong>Consumption: </strong></span>"+d.consumption+" W";
 });
 
@@ -75,7 +76,8 @@ d3.select("#checkChange").on("change",realTime);
 // Get the data
 d3.csv(DATA_FOLDER, function(error, data) {
   data.forEach(function(d) {
-    d.date = parseDate(d.date);
+    // TODO: remove gambiarra
+    d.date = moment(parseDate(d.date)).add(10, 'hours').toDate();
     d.consumption = +d.consumption;
   });
 
@@ -84,9 +86,9 @@ d3.csv(DATA_FOLDER, function(error, data) {
   // Scale the range of the data
   xScale.domain([moment(d3.min(data, function(d) { return d.date; })).subtract(2, 'seconds').toDate(),moment(d3.max(data, function(d) { return d.date; })).add(2, 'seconds').toDate()]);
   // .nice(d3.timeSecond, 20);
-  console.log(d3.extent(data, function(d) { return d.date; }));
+  // console.log(d3.extent(data, function(d) { return d.date; }));
   console.log([moment(d3.min(data, function(d) { return d.date; })).subtract(1, 'minutes').toDate(),moment(d3.max(data, function(d) { return d.date; })).add(1, 'minutes').toDate()]);
-  console.log(moment(d3.min(data, function(d) { return d.date; })).isValid());
+  // console.log(moment(d3.min(data, function(d) { return d.date; })).isValid());
   yScale.domain([d3.min(data, function(d) { return d.consumption; }) - 400, d3.max(data, function(d) { return d.consumption; }) + 50]);
   xScale2.domain(xScale.domain());
   yScale2.domain(yScale.domain()).nice(1);
@@ -120,7 +122,7 @@ d3.csv(DATA_FOLDER, function(error, data) {
 
   focus.append("text")
         .attr("text-anchor", "right")
-        .attr("transform", "translate("+ (width - 40) +","+(height+20)+")")
+        .attr("transform", "translate("+ (width - 40) +","+(height+30)+")")
         .text("Time");
 
   // Add the Y Axis
@@ -130,7 +132,7 @@ d3.csv(DATA_FOLDER, function(error, data) {
 
   focus.append("text")
       .attr("text-anchor", "right")  // this makes it easy to centre the text as the transform is applied to the anchor
-      .attr("transform", "translate("+ (-35) +","+(height - 230)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+      .attr("transform", "translate("+ (-45) +","+(height - 230)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
       .text("Consumption (W)");
 
   // Append scatter plot to brush chart area
@@ -175,7 +177,7 @@ function updateData() {
   // Get the data again
   d3.csv(DATA_FOLDER, function(error, data) {
     data.forEach(function(d) {
-      d.date = parseDate(d.date);
+      d.date = moment(parseDate(d.date)).add(10, 'hours').toDate();
       d.consumption = +d.consumption;
     });
 
@@ -185,9 +187,9 @@ function updateData() {
     // xScale2.domain(d3.extent(data, function(d) { return d.date; }));
     // yScale2.domain([400, d3.max(data, function(d) { return d.consumption; })]).nice(1);
     // Scale the range of the data
-    console.log(d3.extent(data, function(d) { return d.date; }));
-    console.log([d3.min(data, function(d) { return parseInt(d.consumption); }) - 400, d3.max(data, function(d) { return parseInt(d.consumption); })]);
-    console.log(moment(d3.min(data, function(d) { return d.date; })).isValid());
+    // console.log(d3.extent(data, function(d) { return d.date; }));
+    // console.log([d3.min(data, function(d) { return parseInt(d.consumption); }) - 400, d3.max(data, function(d) { return parseInt(d.consumption); })]);
+    // console.log(moment(d3.min(data, function(d) { return d.date; })).isValid());
     xScale.domain([moment(d3.min(data, function(d) { return d.date; })).subtract(2, 'seconds').toDate(),moment(d3.max(data, function(d) { return d.date; })).add(2, 'seconds').toDate()]);
     yScale.domain([d3.min(data, function(d) { return d.consumption; }) - 400, d3.max(data, function(d) { return d.consumption; }) + 50]);
     xScale2.domain(xScale.domain());
