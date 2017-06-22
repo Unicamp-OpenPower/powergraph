@@ -1,4 +1,3 @@
 argparse
 datetime
 tinydb
-thread
