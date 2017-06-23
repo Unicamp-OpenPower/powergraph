@@ -1,0 +1,48 @@
+---
+- hosts: powergraph
+  vars:
+    packages: ["python2.7","ipmitool","apache2","python-pip","git","htop"]
+  become: true
+  tasks:
+    - name: Install packages on Debian Based
+      apt: name={{ item }} state=latest
+      with_items:
+        - "{{ packages }}"
+      when: ansible_os_family == "Debian"
+
+    - name: Install packages on RedHat Based
+      dnf:
+        name: name={{ item }} state=latest
+        with_items:
+          - "{{ packages }}"
+      when: ansible_os_family == "RedHat"
+
+    - name: Clone git repository
+      git:
+        repo: 'https://github.com/Unicamp-OpenPower/powergraph'
+        dest: /var/www/repo
+
+    - name: Install python requirements via pip
+      pip:
+        requirements: /var/www/repo/requirements.txt
+
+    - name: Move front end files to the right location
+      shell: mv /var/www/repo/frontend/* /var/www/html/ 
+    
+    - name: Move back end files to the right location
+      shell: mv /var/www/repo/backend/* /var/www/html/
+    
+    - name: Configure modules
+      shell: a2enmod headers && a2enmod expires
+      notify:
+        - restart apache
+
+    - name: Configure Apache
+      shell: mv -f /var/www/repo/infra/apache.conf /etc/apache2/sites-available/000-default.conf
+
+
+  handlers:
+    - name: restart apache
+      service:
+        name: apache2
+        state: restarted
