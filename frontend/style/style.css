@@ -1,14 +1,11 @@
 body {
   font: 12px Arial;
   height: 800px;
-  /*background-color: #696969;*/
   background-color: #013A6B;
   background-image: -webkit-linear-gradient(45deg, #013A6B 50%, #004E95 50%);
   padding-top: 20px;
 }
 h1{
-  /*font-family: sans-serif;*/
-  /*background: #222;*/
   padding-left: 20px;
   padding-top: 10px;
   color:  #FFED00;
@@ -17,12 +14,11 @@ h1{
 
 }
 .striped{
-  /*font-size: 128px;*/
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-color: #1d6ab2;
-background-image: linear-gradient(-180deg, #ecf0f1 25%, transparent 25%, transparent 50%, #ecf0f1 50%, #ecf0f1 75%, transparent 75%, transparent);
-background-size: 12px 14px;
+  background-image: linear-gradient(-180deg, #ecf0f1 25%, transparent 25%, transparent 50%, #ecf0f1 50%, #ecf0f1 75%, transparent 75%, transparent);
+  background-size: 12px 14px;
 }
 .h1graph{
   text-shadow: 2px 0 0 #2F4F4F, -2px 0 0 #2F4F4F, 0 2px 0 #2F4F4F, 0 -2px 0 #2F4F4F, 1px 1px #2F4F4F, -1px -1px 0 #2F4F4F, 1px -1px 0 #2F4F4F, -1px 1px 0 #2F4F4F;
@@ -33,10 +29,6 @@ path {
   stroke-width: 2;
   fill: none;
 }
-
-/*.dot {
-  fill-opacity: .7;
-}*/
 
 .axis path,
 .axis line {
@@ -109,7 +101,6 @@ path {
 /* The switch - the box around the slider */
 .switch {
   transform: translateY(10px);
-
   position: relative;
   display: inline-block;
   width: 60px;
@@ -166,7 +157,6 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-
 .updateButton{
   padding-left: 500px;
 }
@@ -179,14 +169,11 @@ input:checked + .slider:before {
   text-align: top;
 }
 
-
 #table {
   border-radius: 15px 15px 0px 0px;
   margin: 0 auto;
   width: 960px;
-  /*display: inline-block;*/
   background-color: #fff;
-
 }
 
 /* Control tools position*/
@@ -197,10 +184,12 @@ input:checked + .slider:before {
   position: absolute;
   background-color: #fff;
 }
+
 #wrapper{
   min-height: 100%;
-position: relative;
+  position: relative;
 }
+
 footer {
   width: 100%;
   height: 100px;
@@ -212,28 +201,42 @@ footer {
 }
 
 nav {
-    padding-left: 30px;
-    color: #178acc;
+  padding-left: 30px;
+  color: #178acc;
 }
 
 footer ul {
-    padding:0px;
-    margin:0px;
-    list-style:none;
+  padding:0px;
+  margin:0px;
+  list-style:none;
 }
+
 footer ul li { display: inline; }
+
 footer ul li a {
-    padding: 2px 10px;
-    margin-right: 20px;
-    display: inline-block;
-    font-size: 16px;
-    /* visual do link */
-    /*background-color:#EDEDED;*/
-    color: #333;
-    text-decoration: none;
-    border-bottom:3px solid #EDEDED;
+  padding: 2px 10px;
+  margin-right: 20px;
+  display: inline-block;
+  font-size: 16px;
+  color: #333;
+  text-decoration: none;
+  border-bottom:3px solid #EDEDED;
 }
+
 footer ul li a:hover {
-    background-color:#D6D6D6;
-    border-bottom:3px solid #FFED00;
+  background-color:#D6D6D6;
+  border-bottom:3px solid #FFED00;
+}
+
+.icon {
+  background-image: url(../icons/GitHub-Mark-32px.png);
+  background-position: right center;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  padding-right: 24px;
+}
+
+.handle{
+  fill: black;
+  fill-opacity:0.6;
 }
