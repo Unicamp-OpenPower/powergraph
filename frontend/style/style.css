@@ -1,5 +1,6 @@
 body {
   font: 12px Arial;
+  /*height: 650px;*/
   height: 800px;
   background-color: #013A6B;
   background-image: -webkit-linear-gradient(45deg, #013A6B 50%, #004E95 50%);
@@ -239,4 +240,7 @@ footer ul li a:hover {
 .handle{
   fill: black;
   fill-opacity:0.6;
+}
+p{
+  margin: 10px;
 }
