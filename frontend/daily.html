@@ -24,39 +24,41 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
 </script>
 
 
-
 </head>
 <body>
 <div id="wrapper">
-  <div style="display:table" id="table">
-    <h1>&#9889;<span class="striped"> POWER</span><span class="h1graph">graph</span> </h1>
-    <form ACTION="" METHOD="GET">
-    <b>Date:</b>
-    <input type="date" id="consumptionDate" name="consumptionDate" size="20" />
-    <input type="button" value="Click" name="B1" onClick="getData(this.form)"></p>
-    </form>
-    <div id="scatter" style="display:table-row">
-    </div>
 
-    <div id="graphActions" style="display:table-row">
-      <!-- Rounded switch -->
-      <div style="display:table-cell" class="toggle">
-        <label class="switch">
-          <input id="checkChange" type="checkbox">
-          <div class="slider round">
-          </div>
-        </label>
-      </div >
-
-      <div style="display:table-cell" class="checkDescription">
-        Analize graph in real time.
+  <div style="display:table; table-layout: fixed" id="table">
+    <div style="display:table-cell" class="menu">
+      <div class="dropdown">
+        <button class="dropbtn" onclick="myFunction()">Menu</button>
+        <div class="dropdown-content" id="myDropdown">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="daily.html">Daily Report</a></li>
+          </ul>
+        </div>
       </div>
 
-      <div style="display:table-cell" class="updateButton">
-        <button class="button" id="Button" onclick="updateData()">Update</button>
-      </div>
     </div>
+    <div class="notmenu" style="display:table-cell; background-color:white">
+      <div style="display:table-row">
+        <h1>&#9889;<span class="striped"> POWER</span><span class="h1graph">graph</span> </h1>
+        <form ACTION="" METHOD="GET">
+        <b>Date:</b>
+        <input type="date" id="consumptionDate" name="consumptionDate" size="20" />
+        <input type="button" value="Click" name="B1" onClick="getData(this.form)"></p>
+        </form>
+      </div>
+      <div id="scatter" style="display:table-row">
+      </div>
+      <div style="display:table-row">
+        <p> complete data <a href="data/">here</a></p>
+      </div>
 
+
+    </div>
   </div>
   <footer>
     <nav>
@@ -75,4 +77,6 @@ if (datefield.type!="date"){ //if browser doesn't support input type="date", ini
 <script src="http://d3js.org/d3.v4.min.js"></script>
 <script src="js/moment.min.js"></script>
 <script src="js/daily.js"></script>
+<script src="js/menu.js"></script>
 </body>
+</html>

@@ -6,30 +6,48 @@
 </head>
 <body>
 <div id="wrapper">
-  <div style="display:table" id="table">
-    <h1>&#9889;<span class="striped"> POWER</span><span class="h1graph">graph</span> </h1>
-    <div id="scatter" style="display:table-row">
-    </div>
+  <div style="display:table; table-layout: fixed" id="table">
 
-    <div id="graphActions" style="display:table-row">
-      <!-- Rounded switch -->
-      <div style="display:table-cell" class="toggle">
-        <label class="switch">
-          <input id="checkChange" type="checkbox">
-          <div class="slider round">
-          </div>
-        </label>
-      </div >
-
-      <div style="display:table-cell" class="checkDescription">
-        Analize graph in real time.
-      </div>
-
-      <div style="display:table-cell" class="updateButton">
-        <button class="button" id="Button" onclick="updateData()">Update</button>
+    <div style="display:table-cell" class="menu">
+      <div class="dropdown">
+        <button class="dropbtn" onclick="myFunction()">Menu</button>
+        <div class="dropdown-content" id="myDropdown">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="daily.html">Daily Report</a></li>
+          </ul>
+        </div>
       </div>
     </div>
 
+    <div class="notmenu" style="display:table-cell; background-color:white">
+      <div style="display:table-row">
+        <h1>&#9889;<span class="striped"> POWER</span><span class="h1graph">graph</span> </h1>
+      </div>
+
+      <div id="scatter" style="display:table-row">
+      </div>
+
+      <div id="graphActions" style="display:table-row">
+        <!-- Rounded switch -->
+        <div style="display:table-cell" class="toggle">
+          <label class="switch">
+            <input id="checkChange" type="checkbox">
+            <div class="slider round">
+            </div>
+          </label>
+        </div >
+
+        <div style="display:table-cell" class="checkDescription">
+          Analize graph in real time.
+        </div>
+
+        <div style="display:table-cell" class="updateButton">
+          <button class="button" id="Button" onclick="updateData()">Update</button>
+        </div>
+      </div>
+    </div>
   </div>
   <footer>
     <nav>
@@ -49,5 +67,7 @@
   <script src="js/d3-tip.js"></script>
   <script src="js/moment.min.js"></script>
   <script src="js/graph.js"></script>
+  <script src="js/menu.js"></script>
 
 </body>
+</html>

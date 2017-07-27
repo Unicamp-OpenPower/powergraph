@@ -159,7 +159,7 @@ input:checked + .slider:before {
 }
 
 .updateButton{
-  padding-left: 500px;
+  padding-left: 400px;
 }
 .toggle{
   padding-left: 50px;
@@ -171,19 +171,18 @@ input:checked + .slider:before {
 }
 
 #table {
-  border-radius: 15px 15px 0px 0px;
+  /*border-radius: 15px 15px 0px 0px;*/
   margin: 0 auto;
   width: 960px;
-  background-color: #fff;
+  height: 650px;
+  /*background-color: #fff;*/
 }
 
 /* Control tools position*/
 #graphActions {
-  border-radius: 0px 0px 15px 15px;
   padding-bottom: 10px;
-  width: 960px;
+  width: 810px;
   position: absolute;
-  background-color: #fff;
 }
 
 #wrapper{
@@ -243,4 +242,61 @@ footer ul li a:hover {
 }
 p{
   margin: 10px;
+}
+.menu{
+  background-color: #333;
+  font-family: Arial;
+  overflow: hidden;
+  width: 150px;
+  height: 450px;
+  border-radius: 15px 0px 0px 15px;
+}
+.notmenu{
+  border-radius: 0px 15px 15px 0px;
+}
+.menu a{
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 0px;
+  text-decoration: none;
+  width: 150px
+}
+ul{
+  margin:0px;
+  padding:0px;
+  list-style:none;
+}
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+.dropdown .dropbtn{
+  cursor: pointer;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  width: 150px;
+}
+.menu a:hover, .dropdown:hover .dropbtn{
+  background-color: red;
+}
+
+.dropdown-content{
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a:hover{
+  background-color: #ddd;
+}
+.show{
+  display: block;
 }
